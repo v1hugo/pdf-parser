@@ -1,4 +1,6 @@
+import os
 import gspread
+import json
 from google.oauth2.service_account import Credentials
 
 SCOPES = [
@@ -6,8 +8,10 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive"
 ]
 
-CREDS = Credentials.from_service_account_file(
-    "credentials/service_account.json",
+creds_json = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT"])
+
+CREDS = Credentials.from_service_account_info(
+    creds_json,
     scopes=SCOPES
 )
 
