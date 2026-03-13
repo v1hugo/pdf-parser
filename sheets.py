@@ -17,7 +17,7 @@ CREDS = Credentials.from_service_account_info(
 
 client = gspread.authorize(CREDS)
 
-SHEET_NAME = "PDF_DATA"
+SHEET_NAME = "Avocados Rangel"
 
 def write_to_google_sheets(header,
                            ordenes_rows,
