@@ -1,0 +1,6 @@
+flask
+pdfplumber
+tabulate
+gspread
+google-auth
+gunicorn
