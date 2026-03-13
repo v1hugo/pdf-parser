@@ -1,8 +1,15 @@
+
+import logging
 from flask import Flask, request, jsonify
 import tempfile
 from parser import main
 
 app = Flask(__name__)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
 
 @app.route("/")
 def home():
@@ -10,6 +17,7 @@ def home():
 
 @app.route("/process_pdf", methods=["POST"])
 def process_pdf():
+    logging.info("PROCESS_PDF endpoint triggered")
 
     if 'file' not in request.files:
         return jsonify({"error":"No file received"}), 400
@@ -26,4 +34,4 @@ def process_pdf():
     })
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    app.run(host="0.0.0.0", port=10000, debug=True,use_reloader=False)
