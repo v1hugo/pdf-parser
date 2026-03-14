@@ -1,24 +1,19 @@
 
-import logging
 from flask import Flask, request, jsonify
 import tempfile
 from parser import main
 
 app = Flask(__name__)
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
-)
-
 @app.route("/")
+
 def home():
     return "PDF Parser API Running"
 
 @app.route("/process_pdf", methods=["POST"])
-def process_pdf():
-    logging.info("PROCESS_PDF endpoint triggered")
 
+def process_pdf():
+    print("Received request to process PDF")
     if 'file' not in request.files:
         return jsonify({"error":"No file received"}), 400
 

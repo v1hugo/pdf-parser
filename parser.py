@@ -15,10 +15,11 @@ from sheets import write_to_google_sheets
 def main(pdf_path):
     print("Processing PDF:", pdf_path)
 
-    logging.basicConfig(level=logging.INFO) 
-
     full_text, lines = extract_full_text(pdf_path)
+
     header, _ = parse_header(lines)
+#    print("Header extracted:", header)
+
     ordenes_rows, ordenes_total, ordenes_header = parse_ordenes(lines, None)
     categoria_rows, categoria_total, categoria_header = parse_categorias(lines)
     linea_rows, linea_header = parse_lineas(lines)
@@ -37,20 +38,10 @@ def main(pdf_path):
 
     validation = "OK" if validation_ok else "ERROR"
 
-#    print(tabulate(header))
-    logging.info(tabulate(header, tablefmt="psql"))
+    print("contenido: ",header)
+#    logging.info(tabulate(header, tablefmt="psql"))
 
-    write_to_google_sheets(
-        header,
-        ordenes_rows,
-        ordenes_header,
-        categoria_rows,
-        categoria_header,
-        linea_rows,
-        linea_header,
-        kilos_seleccionados,
-        validation
-    )
+    write_to_google_sheets(header,ordenes_rows,ordenes_header,categoria_rows,categoria_header,linea_rows,linea_header,kilos_seleccionados,validation)
 
     return {
         "header": header,
