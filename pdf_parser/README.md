@@ -15,3 +15,5 @@ Use the add-on options to set:
 Place your Google service account JSON at the configured path inside Home Assistant, for example:
 
 `/config/pdf_parser/service_account.json`
+
+The add-on definition is stored in `config.yaml`.
