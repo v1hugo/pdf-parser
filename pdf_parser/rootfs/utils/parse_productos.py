@@ -1,4 +1,11 @@
 import re
+import unicodedata
+
+
+def normalize_text(text):
+    text = text.lower()
+    text = unicodedata.normalize("NFD", text)
+    return "".join(char for char in text if unicodedata.category(char) != "Mn")
 
 
 def parse_productos(lines):
@@ -7,10 +14,7 @@ def parse_productos(lines):
     total_kg = 0.0
 
     for i, line in enumerate(lines):
-        if (
-            "Relacion de Productos Seleccionados" in line
-            or "Relación de Productos Seleccionados" in line
-        ):
+        if "relacion de productos seleccionados" in normalize_text(line):
             start = i + 2
             break
 

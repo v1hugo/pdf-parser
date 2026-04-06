@@ -1,4 +1,11 @@
 from datetime import datetime
+import unicodedata
+
+
+def normalize_text(text):
+    text = text.lower()
+    text = unicodedata.normalize("NFD", text)
+    return "".join(char for char in text if unicodedata.category(char) != "Mn")
 
 
 def parse_ordenes(lines, _):
@@ -6,7 +13,7 @@ def parse_ordenes(lines, _):
         (
             i
             for i, line in enumerate(lines)
-            if "Relacion de Ordenes de Corte" in line or "Relación de Ordenes de Corte" in line
+            if "relacion de ordenes de corte" in normalize_text(line)
         ),
         -1,
     ) + 1
@@ -19,12 +26,10 @@ def parse_ordenes(lines, _):
             i
             for i in range(ordenes_start, len(lines))
             if any(
-                marker in lines[i]
+                marker in normalize_text(lines[i])
                 for marker in [
-                    "Resumen de Seleccion por Categoria",
-                    "Resumen de Selección por Categoría",
-                    "Relacion de Productos Seleccionados",
-                    "Relación de Productos Seleccionados",
+                    "resumen de seleccion por categoria",
+                    "relacion de productos seleccionados",
                 ]
             )
         ),
@@ -52,14 +57,20 @@ def parse_ordenes(lines, _):
             continue
 
         if len(row) == 5:
-            row[4] = float(row[4].replace(",", ""))
+            try:
+                row[4] = float(row[4].replace(",", ""))
+            except ValueError:
+                continue
             try:
                 row[2] = datetime.strptime(row[2], "%d/%m/%Y").strftime("%d/%m/%Y")
             except ValueError:
                 pass
             ordenes_rows.append(row)
         elif len(row) == 4:
-            row[3] = float(row[3].replace(",", ""))
+            try:
+                row[3] = float(row[3].replace(",", ""))
+            except ValueError:
+                continue
             try:
                 row[1] = datetime.strptime(row[1], "%d/%m/%Y").strftime("%d/%m/%Y")
             except ValueError:
