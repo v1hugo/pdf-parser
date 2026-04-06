@@ -9,6 +9,7 @@ DEFAULTS = {
     "folder_procesados": "",
     "folder_error": "",
     "service_account_path": "/config/pdf_parser/service_account.json",
+    "poll_interval_seconds": 60,
 }
 
 
@@ -34,6 +35,21 @@ def load_options():
 
 def get_option(name):
     return load_options().get(name, DEFAULTS.get(name))
+
+
+def get_int_option(name, minimum=None):
+    value = get_option(name)
+    try:
+        value = int(value)
+    except (TypeError, ValueError) as exc:
+        raise RuntimeError(f"Invalid integer add-on option: {name}") from exc
+
+    if minimum is not None and value < minimum:
+        raise RuntimeError(
+            f"Add-on option {name} must be greater than or equal to {minimum}"
+        )
+
+    return value
 
 
 def require_option(name):

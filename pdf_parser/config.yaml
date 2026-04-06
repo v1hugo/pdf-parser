@@ -19,9 +19,11 @@ options:
   folder_procesados: ""
   folder_error: ""
   service_account_path: /config/pdf_parser/service_account.json
+  poll_interval_seconds: 60
 schema:
   spreadsheet_id: str
   folder_entrada: str
   folder_procesados: str
   folder_error: str
   service_account_path: str
+  poll_interval_seconds: int(5,)

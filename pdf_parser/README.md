@@ -11,9 +11,12 @@ Use the add-on options to set:
 - `folder_procesados`
 - `folder_error`
 - `service_account_path`
+- `poll_interval_seconds`
 
 Place your Google service account JSON at the configured path inside Home Assistant, for example:
 
 `/config/pdf_parser/service_account.json`
 
 The add-on definition is stored in `config.yaml`.
+
+`poll_interval_seconds` controls how often the add-on checks Google Drive for new PDFs while staying alive in the background. The default is `60`.
