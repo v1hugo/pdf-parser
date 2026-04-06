@@ -1,23 +1,27 @@
-<<<<<<< HEAD
-# PDF Drive Parser
+# PDF Parser Home Assistant Add-on Repository
 
-Sistema para procesar PDFs desde Google Drive y enviar datos a Google Sheets.
+This branch turns `pdf-parser` into a Home Assistant add-on repository that can be added directly from GitHub.
 
-Arquitectura:
+## Install from GitHub
 
-Google Drive
-↓
-Apps Script
-↓
-API Flask (Render)
-↓
-Parser
-↓
-Google Sheets
+1. In Home Assistant, open `Settings -> Add-ons -> Add-on Store`.
+2. Open the menu and choose `Repositories`.
+3. Add this repository URL and select branch `ha-addon`:
+   `https://github.com/v1hugo/pdf-parser`
+4. Install the `PDF Parser` add-on.
 
-Endpoint:
+## Required add-on options
 
-POST /process_pdf
-=======
-# pdf-parser
->>>>>>> dcc36c1b0dc69e32c6629a7950bd14ba64453b67
+Set these options before starting the add-on:
+
+- `spreadsheet_id`
+- `folder_entrada`
+- `folder_procesados`
+- `folder_error`
+- `service_account_path`
+
+The default credentials path is:
+
+`/config/pdf_parser/service_account.json`
+
+Create that file inside your Home Assistant config directory before running the add-on.

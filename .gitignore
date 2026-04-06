@@ -1,1 +1,6 @@
 credentials/service_account.json
+_import_pdf_parser/
+__pycache__/
+*.pyc
+desktop.ini
+pdf_parser/rootfs/utils/__pycache__/
