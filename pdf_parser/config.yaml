@@ -1,5 +1,5 @@
 name: PDF Parser
-version: 1.0.0
+version: 1.0.1
 slug: pdf_parser
 description: Parse PDFs from Google Drive and write results to Google Sheets.
 url: https://github.com/v1hugo/pdf-parser

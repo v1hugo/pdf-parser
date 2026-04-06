@@ -2,6 +2,8 @@
 
 Home Assistant add-on that reads PDFs from Google Drive, parses their contents, and writes the output to Google Sheets.
 
+Current add-on version: `1.0.1`
+
 ## Configuration
 
 Use the add-on options to set:
