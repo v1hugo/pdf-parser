@@ -10,6 +10,11 @@ DEFAULTS = {
     "folder_error": "",
     "service_account_path": "/config/pdf_parser/service_account.json",
     "poll_interval_seconds": 60,
+    "mqtt_host": "",
+    "mqtt_port": 1883,
+    "mqtt_topic": "pdf_parser/status",
+    "mqtt_username": "",
+    "mqtt_password": "",
 }
 
 

@@ -1,5 +1,5 @@
 name: PDF Parser
-version: 1.0.1
+version: 1.0.2
 slug: pdf_parser
 description: Parse PDFs from Google Drive and write results to Google Sheets.
 url: https://github.com/v1hugo/pdf-parser
@@ -20,6 +20,11 @@ options:
   folder_error: ""
   service_account_path: /config/pdf_parser/service_account.json
   poll_interval_seconds: 60
+  mqtt_host: ""
+  mqtt_port: 1883
+  mqtt_topic: pdf_parser/status
+  mqtt_username: ""
+  mqtt_password: ""
 schema:
   spreadsheet_id: str
   folder_entrada: str
@@ -27,3 +32,8 @@ schema:
   folder_error: str
   service_account_path: str
   poll_interval_seconds: int(5,)
+  mqtt_host: str?
+  mqtt_port: int(1,65535)
+  mqtt_topic: str?
+  mqtt_username: str?
+  mqtt_password: password?

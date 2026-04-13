@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import uuid
 
 import gspread
@@ -22,6 +23,24 @@ ENCABEZADO_COLUMNS = [
     "Observaciones",
     "PDF_URL",
 ]
+
+LOG_COLUMNS = [
+    "timestamp",
+    "file_name",
+    "file_id",
+    "file_url",
+    "status",
+    "validation",
+    "seleccion_id",
+    "doc_type",
+    "message",
+]
+
+
+def open_spreadsheet():
+    spreadsheet_id = require_option("spreadsheet_id")
+    client = gspread.authorize(CREDS)
+    return client.open_by_key(spreadsheet_id)
 
 
 def seleccion_id_exists(sheet, seleccion_id):
@@ -117,9 +136,7 @@ def write_to_google_sheets(
     del kilos_seleccionados
     del validation
 
-    spreadsheet_id = require_option("spreadsheet_id")
-    client = gspread.authorize(CREDS)
-    spreadsheet = client.open_by_key(spreadsheet_id)
+    spreadsheet = open_spreadsheet()
 
     seleccion_id = str(
         header.get("No. de Selección", header.get("No. de Seleccion", str(uuid.uuid4())))
@@ -144,3 +161,28 @@ def write_to_google_sheets(
         "seleccion_id": seleccion_id,
         "message": "Record saved",
     }
+
+
+def append_process_log(file_name, file_id, file_url, result=None, error=None):
+    spreadsheet = open_spreadsheet()
+    sheet = get_or_create_worksheet(spreadsheet, "logs", 20, len(LOG_COLUMNS))
+    data = sheet.get_all_values()
+
+    if not data:
+        sheet.update("A1", [LOG_COLUMNS])
+
+    result = result or {}
+    message = str(error) if error is not None else result.get("message", "")
+
+    row = [
+        datetime.now(timezone.utc).isoformat(),
+        file_name,
+        file_id,
+        file_url or "",
+        result.get("status", "error" if error is not None else ""),
+        result.get("validation", ""),
+        result.get("seleccion_id", ""),
+        result.get("doc_type", ""),
+        message,
+    ]
+    sheet.append_row(row, value_input_option="USER_ENTERED")
