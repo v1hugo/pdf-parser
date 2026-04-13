@@ -4,6 +4,8 @@ Home Assistant add-on that reads PDFs from Google Drive, parses their contents, 
 
 Current add-on version: `1.0.2`
 
+See [CHANGELOG.md](CHANGELOG.md) for the list of improvements in this release.
+
 ## Configuration
 
 Use the add-on options to set:
